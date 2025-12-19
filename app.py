@@ -9,9 +9,9 @@ app = Flask(__name__)
 # 보안 정책 최적화
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# 발급받은 네이버 API 키
-NAVER_CLIENT_ID = "nXU4pKv9DOBH9YV6UzFE"
-NAVER_CLIENT_SECRET = "jAF3gYhxGE"
+# 직접 입력 대신 서버 시스템에서 값을 가져오도록 설정
+NAVER_CLIENT_ID = os.environ.get("NAVER_CLIENT_ID")
+NAVER_CLIENT_SECRET = os.environ.get("NAVER_CLIENT_SECRET")
 
 @app.route('/get_lowest_price', methods=['POST', 'OPTIONS'])
 def get_lowest_price():
@@ -86,4 +86,5 @@ def get_lowest_price():
 if __name__ == '__main__':
     # 배포 환경을 위한 포트 설정 추가
     port = int(os.environ.get("PORT", 5000))
+
     app.run(host='0.0.0.0', port=port)
